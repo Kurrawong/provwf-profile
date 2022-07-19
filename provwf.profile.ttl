@@ -3,8 +3,10 @@ PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX prof: <http://www.w3.org/ns/dx/prof/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX provwf: <https://w3id.org/profile/provwf/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX role: <http://www.w3.org/ns/dx/prof/role/>
 PREFIX sdo: <https://schema.org/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX skosxl: <http://www.w3.org/2008/05/skos-xl#>
@@ -12,7 +14,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 
 <https://w3id.org/profile/provwf>
-    a owl:Ontology , prof:Profile
+    a owl:Ontology , prof:Profile ;
     dcterms:provenance "This profile of PROV was made to assure the provenance information produced by the Python ProvWF package (see https://github.com/surroundaustralia/provwf) and any other ProvWF-producing tools."@en ;
     owl:versionIRI provwf:0.0.1 ;
     owl:versionInfo "0.0.1" ;
@@ -27,6 +29,35 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sdo:dateModified "2022-07-18"^^xsd:date ;
     sdo:license "https://creativecommons.org/licenses/by/4.0/"^^xsd:anyURI ;
     sdo:publisher <https://orcid.org/0000-0002-8742-7730> ;
+    prov:hasResource [
+        rdfs:label "Specification Document" ;
+        prof:hasArtifact <https://w3id.org/profile/provwf/spec> ;
+        dcterms:format "text/html" ;
+        prof:hasRole role:specification ;
+    ] ,
+    [
+        rdfs:label "Ontology" ;
+        prof:hasArtifact <https://data.surroundaustralia.com/def/provworkflow/ontology> ;
+        dcterms:format "text/html" ;
+        prof:hasRole role:schema ;
+    ],
+    [
+        rdfs:label "Ontology RDF" ;
+        prof:hasArtifact <https://data.surroundaustralia.com/def/provworkflow/ontology.ttl> ;
+        dcterms:format "text/turtle" ;
+        prof:hasRole role:schema ;
+    ],
+    [
+        rdfs:label "SHACL Validator" ;
+        prof:hasArtifact <https://w3id.org/profile/provwf/validator> ;
+        dcterms:format "text/turtle" ;
+        prof:hasRole role:validation ;
+    ], 
+    [
+        rdfs:label "Code Repository" ;
+        prof:hasArtifact <https://w3id.org/profile/provwf/repo> ;
+        prof:hasRole role:repository ;
+    ] ;
 .
 
 <https://orcid.org/0000-0002-8742-7730>
@@ -42,4 +73,3 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     sdo:description "Kurrawong AI is a small, Artificial Intelligence, company in Australia specialising in Knowledge Graphs." ;
     sdo:url "https://kurrawong.net"^^xsd:anyURI ;
 .
-

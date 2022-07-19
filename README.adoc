@@ -6,6 +6,9 @@ See the formal definition of this profile at its persistent web address location
 
 * https://w3id.org/profile/provwf
 
+That resource's source is the file profile.html in this repository.
+
+
 == License & Rights
 
 The contents of this repository is licensed under Creative Commons 4.0 International. See the LICENSE file in the repository for details.
