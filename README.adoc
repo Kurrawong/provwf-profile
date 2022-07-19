@@ -1,0 +1,20 @@
+= ProvWF Profile
+
+This repository contains a profile of https://www.w3.org/TR/dx-prof/[PROV-O] designed for the representation of workflows.
+
+See the formal definition of this profile at its persistent web address location for details:
+
+* https://w3id.org/profile/provwf
+
+== License & Rights
+
+The contents of this repository is licensed under Creative Commons 4.0 International. See the LICENSE file in the repository for details.
+
+
+== Contacts
+
+Initial technical development of this work is being undertaken by the following, for the Indigenous Data Network:
+
+**Nicholas J. Car** +
+*Data Architect* +
+nick@kurrawong.net  

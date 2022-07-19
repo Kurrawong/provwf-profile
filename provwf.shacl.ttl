@@ -1,0 +1,159 @@
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX provwf: <https://w3id.org/profile/provwf/>
+PREFIX provwfo: <https://data.surroundaustralia.com/def/provworkflow/>
+PREFIX provwfv: <https://w3id.org/profile/provwf/validator/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sdo: <https://schema.org/>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX time: <http://www.w3.org/2006/time#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+
+<https://w3id.org/profile/provwf/validator>
+    a owl:Ontology ;
+    dcterms:provenance "This validator for ProvWF was created to validate information produced by the Python ProvWF package (see https://github.com/surroundaustralia/provwf) and any other ProvWF-producing tools."@en ;
+    owl:versionIRI provwfv:0.0.1 ;
+    owl:versionInfo "0.0.1" ;
+    skos:definition "A SHACL validator for the ProvWF profile of PROV"@en ;
+    skos:prefLabel "ProvWF Profile of PROV"@en ;
+    sdo:codeRespository "https://github.com/surroundaustralia/provwf"^^xsd:anyURI ;
+    sdo:copyrightHolder <https://orcid.org/0000-0002-8742-7730> ;
+    sdo:copyrightNotice "(c) Nicholas J. Car, 2022" ;
+    sdo:creator <https://orcid.org/0000-0002-8742-7730> ;
+    sdo:dateCreated "2022-07-18"^^xsd:date ;
+    sdo:dateIssued "2022-07-19"^^xsd:date ;
+    sdo:dateModified "2022-07-18"^^xsd:date ;
+    sdo:license "https://creativecommons.org/licenses/by/4.0/"^^xsd:anyURI ;
+    sdo:publisher <https://orcid.org/0000-0002-8742-7730> ;
+.
+
+<https://orcid.org/0000-0002-8742-7730>
+    a sdo:Person ;
+    sdo:name "Nicholas J. Car"@en ;
+    sdo:email "nick@kurrawong.net"^^xsd:anyURI ;
+    sdo:affiliation <https://kurrawong.net> ;
+.
+
+<https://kurrawong.net>
+    a sdo:Organization ;
+    sdo:name "Kurrawong AI" ;
+    sdo:description "Kurrawong AI is a small, Artificial Intelligence, company in Australia specialising in Knowledge Graphs." ;
+    sdo:url "https://kurrawong.net"^^xsd:anyURI ;
+.
+
+provwfv:workflow-required-properties
+    a sh:NodeShape ;
+    sh:targetClass provwfo:Workflow ;
+    rdfs:label "Workflow class instance required properties" ;
+    sh:property
+        [
+            rdfs:label "Workflow used" ;
+            sh:message "2.1. Each Workflow & Block instance must link to at least one input which is understood to be a prov:Entity, and which it must indicate the property prov:used or a semantically equivalent construct" ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:class prov:Entity ;
+            sh:path prov:used ;
+        ] ,
+        [
+            rdfs:label "Workflow generated" ;
+            sh:message "2.2. Each Workflow & Block instance must link to at least one output which is understood to be a prov:Entity, and which it must indicate the property prov:generate or a semantically equivalent construct" ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:class prov:Entity ;
+            sh:path prov:generated ;
+        ] ,
+        [
+            rdfs:label "Workflow start time" ;
+            sh:message "2.3. Each Workflow & Block instance must link to the time it started with the property prov:startedAtTime and the time it ended with the property prov:endedAtTime which must indicate allowed Semantic Web date/time properties. 2.3.a Allowed Semantic Web date/time properties are xsd:date, xsd:dateTime, xsd:dateTimeStamp, time:Interval" ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:or (
+                [ sh:datatype xsd:dateTime ]
+                [ sh:datatype xsd:date ]
+                [ sh:datatype xsd:dateTimeStamp ]
+                [ sh:datatype time:Instant ]
+            ) ;
+            sh:path prov:startedAtTime ;
+        ] ,
+        [
+            rdfs:label "Workflow end time" ;
+            sh:message "2.3. Each Workflow & Block instance must link to the time it started with the property prov:startedAtTime and the time it ended with the property prov:endedAtTime which must indicate allowed Semantic Web date/time properties. 2.3.a Allowed Semantic Web date/time properties are xsd:date, xsd:dateTime, xsd:dateTimeStamp, time:Interval" ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:or (
+                [ sh:datatype xsd:dateTime ]
+                [ sh:datatype xsd:date ]
+                [ sh:datatype xsd:dateTimeStamp ]
+                [ sh:datatype time:Instant ]
+            ) ;
+            sh:path prov:endedAtTime ;
+        ] ,
+        [
+            rdfs:label "Workflow had block" ;
+            sh:message "2.4. Each Workflow instance must indicate at least one Block instance within it using the property hadBlock" ;
+            sh:minCount 1 ;
+            sh:class provwfo:Block ;
+            sh:path provwfo:hadBlock ;
+        ] ;
+.
+
+provwfv:block-required-properties
+    a sh:NodeShape ;
+    sh:targetClass provwfo:Block ;
+    rdfs:label "Block class instance required properties" ;
+    sh:property
+        [
+            rdfs:label "Block used" ;
+            sh:message "2.1. Each Workflow & Block instance must link to at least one input which is understood to be a prov:Entity, and which it must indicate the property prov:used or a semantically equivalent construct" ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:class prov:Entity ;
+            sh:path prov:used ;
+        ] ,
+        [
+            rdfs:label "Block generated" ;
+            sh:message "2.2. Each Workflow & Block instance must link to at least one output which is understood to be a prov:Entity, and which it must indicate the property prov:generate or a semantically equivalent construct" ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:class prov:Entity ;
+            sh:path prov:generated ;
+        ] ,
+        [
+            rdfs:label "Block start time" ;
+            sh:message "2.3. Each Workflow & Block instance must link to the time it started with the property prov:startedAtTime and the time it ended with the property prov:endedAtTime which must indicate allowed Semantic Web date/time properties. 2.3.a Allowed Semantic Web date/time properties are xsd:date, xsd:dateTime, xsd:dateTimeStamp, time:Interval" ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:or (
+                [ sh:datatype xsd:dateTime ]
+                [ sh:datatype xsd:date ]
+                [ sh:datatype xsd:dateTimeStamp ]
+                [ sh:datatype time:Instant ]
+            ) ;
+            sh:path prov:startedAtTime ;
+        ] ,
+        [
+            rdfs:label "Block end time" ;
+            sh:message "2.3. Each Workflow & Block instance must link to the time it started with the property prov:startedAtTime and the time it ended with the property prov:endedAtTime which must indicate allowed Semantic Web date/time properties. 2.3.a Allowed Semantic Web date/time properties are xsd:date, xsd:dateTime, xsd:dateTimeStamp, time:Interval" ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:or (
+                [ sh:datatype xsd:dateTime ]
+                [ sh:datatype xsd:date ]
+                [ sh:datatype xsd:dateTimeStamp ]
+                [ sh:datatype time:Instant ]
+            ) ;
+            sh:path prov:endedAtTime ;
+        ] ,
+        [
+            rdfs:label "Block inverse had block" ;
+            sh:message "2.5. Each Block instance must be indicated as being within one and only one Workflow instance with the Workflow indicating the association with the via the hadBlock property" ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:class provwfo:Workflow ;
+            sh:path [ sh:inversePath provwfo:hadBlock ] ;
+        ] ;
+.
